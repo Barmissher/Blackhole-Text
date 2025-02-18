@@ -10,7 +10,7 @@ class Particle {
     }
 
     draw(ctx) {
-        ctx.fillStyle = 'black'; // Teks hitam
+        ctx.fillStyle = 'black'; 
         ctx.font = `${fontSize}px "Courier New", monospace`;
         ctx.fillText(this.char, this.x, this.y);
     }
@@ -55,7 +55,7 @@ Dan demikianlah, siklus terus berlanjut, tanpa henti, tanpa batas. Alam semesta 
 
 let particles = [];
 let mouse = { x: null, y: null, radius: 100 };
-let fontSize = 20; // Ukuran font responsif
+let fontSize = 24; 
 
 function init() {
     const canvas = document.getElementById('canvas');
@@ -63,12 +63,12 @@ function init() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    fontSize = Math.min(canvas.width, canvas.height) * 0.02; // Ukuran teks otomatis
+    fontSize = Math.min(canvas.width, canvas.height) * 0.025; 
     ctx.textAlign = 'left';
 
-    let margin = 50;
+    let margin = 100;
     let startX = margin;
-    let startY = margin;
+    let startY = canvas.height / 4; 
     let lineHeight = fontSize * 1.5;
     let charWidth = fontSize * 0.7;
 
@@ -91,7 +91,10 @@ function init() {
 function animate() {
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    
+    ctx.fillStyle = 'white';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     particles.forEach(particle => {
         particle.update(mouse);
