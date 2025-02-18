@@ -10,7 +10,7 @@ class Particle {
     }
 
     draw(ctx) {
-        ctx.fillStyle = 'black'; // Teks hitam
+        ctx.fillStyle = 'black';
         ctx.font = '18px "Courier New", monospace';
         ctx.fillText(this.char, this.x, this.y);
     }
