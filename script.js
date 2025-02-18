@@ -10,8 +10,8 @@ class Particle {
     }
 
     draw(ctx) {
-        ctx.fillStyle = 'black';
-        ctx.font = '18px "Courier New", monospace';
+        ctx.fillStyle = 'black'; // Teks hitam
+        ctx.font = `${fontSize}px "Courier New", monospace`;
         ctx.fillText(this.char, this.x, this.y);
     }
 
@@ -19,7 +19,7 @@ class Particle {
         let dx = mouse.x - this.x;
         let dy = mouse.y - this.y;
         let distance = Math.sqrt(dx * dx + dy * dy);
-        const maxDistance = 150;
+        const maxDistance = 200;
         const minDistance = 5;
         const gravitationalPull = 2;
 
@@ -54,11 +54,8 @@ Di sudut-sudut dunia siber, kode biner berdenyut seperti sinapsis buatan, menghi
 Dan demikianlah, siklus terus berlanjut, tanpa henti, tanpa batas. Alam semesta terus mengembang, benda-benda langit mengikuti jalurnya, dan umat manusia bergerak maju menuju hal yang belum diketahui, didorong oleh rasa ingin tahu yang tak terpuaskan dan keinginan untuk memahami yang tak terjangkau.`;
 
 let particles = [];
-let mouse = {
-    x: null,
-    y: null,
-    radius: 100
-};
+let mouse = { x: null, y: null, radius: 100 };
+let fontSize = 20; // Ukuran font responsif
 
 function init() {
     const canvas = document.getElementById('canvas');
@@ -66,26 +63,27 @@ function init() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    let squareSize = Math.min(canvas.width, canvas.height) * 0.8;
-    let squareX = canvas.width / 2 - squareSize / 2;
-    let squareY = canvas.height / 2 - squareSize / 2;
-
+    fontSize = Math.min(canvas.width, canvas.height) * 0.02; // Ukuran teks otomatis
     ctx.textAlign = 'left';
-    const textLines = text.split('\n');
-    const lineHeight = 32;
-    const charWidth = 11;
 
-    textLines.forEach((line, lineIndex) => {
-        const characters = line.split('');
-        const lineWidth = characters.length * charWidth;
-        const lineX = squareX + (squareSize - lineWidth) / 2;
+    let margin = 50;
+    let startX = margin;
+    let startY = margin;
+    let lineHeight = fontSize * 1.5;
+    let charWidth = fontSize * 0.7;
 
-        characters.forEach((char, i) => {
-            const x = lineX + (i * charWidth);
-            const y = squareY + (lineIndex * lineHeight) + 40;
-            if (x < squareX + squareSize && y < squareY + squareSize) {
-                particles.push(new Particle(x, y, char));
+    text.split('\n').forEach((line, lineIndex) => {
+        let x = startX;
+        let y = startY + lineIndex * lineHeight;
+
+        line.split('').forEach(char => {
+            if (x + charWidth > canvas.width - margin) { 
+                x = startX; 
+                y += lineHeight;
             }
+
+            particles.push(new Particle(x, y, char));
+            x += charWidth;
         });
     });
 }
